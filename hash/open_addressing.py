@@ -3,9 +3,17 @@ class Hash:
         self.size = size
         self.table = [None for i in range(0, size)]
 
-    def get_hash_value(self, key, i):
+    def linear_probing(self, key, i):
         hash_value = ((key % self.size) + i) % self.size
         return hash_value
+
+    def quadratic_probing(self, key, i):
+        hash_value = ((key % self.size) + (i * i)) % self.size
+        return hash_value
+
+    def get_hash_value(self, key, i):
+        # return self.linear_probing(key, i)
+        return self.quadratic_probing(key, i)
 
     def insert(self, key):
         i = 0
