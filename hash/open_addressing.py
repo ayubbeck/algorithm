@@ -12,8 +12,8 @@ class Hash:
         return hash_value
 
     def get_hash_value(self, key, i):
-        # return self.linear_probing(key, i)
-        return self.quadratic_probing(key, i)
+        return self.linear_probing(key, i)
+        # return self.quadratic_probing(key, i)
 
     def insert(self, key):
         i = 0
