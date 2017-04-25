@@ -14,6 +14,12 @@ class BSTTests(unittest.TestCase):
         self.bst.inorder_walk(self.bst.root)
         self.assertEqual(0, 0)
 
+    def test_preorder_walk(self):
+        print '*'*20
+        self.bst.preorder_walk(self.bst.root)
+        print '*'*20
+        self.assertEqual(0, 0)
+
     def test_min(self):
         min = self.bst.min(self.bst.root)
         self.assertEqual(min.data, 1)

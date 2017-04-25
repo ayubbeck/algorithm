@@ -18,7 +18,13 @@ class BST:
             print node.data
             self.inorder_walk(node.right)
 
-    def parent(self, data):
+    def preorder_walk(self, node):
+        if node is not None:
+            print node.data
+            self.preorder_walk(node.left)
+            self.preorder_walk(node.right)
+
+    def find_parent(self, data):
         parent = None
         curr = self.root
 
@@ -31,9 +37,18 @@ class BST:
 
         return parent
 
+    def find_parent_recursive(self, node, parent, data):
+        if node is None:
+            return parent
+        if data < node.data:
+            return self.find_parent_recursive(node.left, node, data)
+        else:
+            return self.find_parent_recursive(node.right, node, data)
+
     def insert(self, data):
         node = Node(data)
-        parent = self.parent(data)
+        parent = self.find_parent(data)
+        # parent = self.find_parent_recursive(self.root, None, data)
 
         if parent is None:
             self.root = node
