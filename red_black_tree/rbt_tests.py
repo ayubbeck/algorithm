@@ -21,5 +21,19 @@ class RedBlackTreeTests(unittest.TestCase):
         print '*' * 20
         self.assertEqual(0, 0)
 
+    def test_search(self):
+        node = self.rbt.search(8)
+        self.assertEqual(node.data, 8)
+
+    def test_delete(self):
+        node = self.rbt.search(8)
+        self.rbt.delete(node)
+        print '*' * 20
+        print self.rbt.root
+        print '=' * 20
+        self.rbt.inorder_walk(self.rbt.root)
+        print '*' * 20
+        self.assertEqual(self.rbt.search(8), self.rbt.dummy)
+
 if __name__ == "__main__":
     unittest.main()

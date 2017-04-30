@@ -116,3 +116,108 @@ class RedBlackTree:
             self.inorder_walk(node.left)
             print node if node.data is not None else ''
             self.inorder_walk(node.right)
+
+    def min(self, node):
+        min = node
+        while node != self.dummy:
+            min = node
+            node = node.left
+        return min
+
+    def search(self, data):
+        curr = self.root
+        node = self.dummy
+
+        while curr != self.dummy and data != curr.data:
+
+            if data < curr.data:
+                curr = curr.left
+            else:
+                curr = curr.right
+
+            node = curr
+
+        return node
+
+    def transplant(self, node, child):
+        if node.parent == self.dummy:
+            self.root = child
+        elif node == node.parent.left:
+            node.parent.left = child
+        else:
+            node.parent.right = child
+        child.parent = node.parent
+
+    def delete(self, node):
+        temp = node
+        temp_orig_color = temp.color
+
+        if node.left == self.dummy:
+            start_fixup = node.right
+            self.transplant(node, node.right)
+        elif node.right == self.dummy:
+            start_fixup = node.left
+            self.transplant(node, node.left)
+        else:
+            temp = self.min(node.right)
+            temp_orig_color = temp.color
+            start_fixup = temp.right
+
+            if temp.parent == node:
+                start_fixup.parent = temp
+            else:
+                self.transplant(temp, temp.right)
+                temp.right = node.right
+                temp.right.parent = temp
+            self.transplant(node, temp)
+            temp.left = node.left
+            temp.left.parent = temp
+            temp.color = node.color
+
+        if temp_orig_color == 'BLACK':
+            self.delete_fixup(start_fixup)
+
+    def delete_fixup(self, node):
+        while node != self.root and node.color == 'BLACK':
+            if node == node.parent.left:
+                node_sibling = node.parent.right
+                if node_sibling.color == 'RED':
+                    node_sibling.color = 'BLACK'
+                    node.parent.color = 'RED'
+                    self.left_rotate(node.parent)
+                    node_sibling = node.parent.right
+                if node_sibling.left.color == 'BLACK' and node_sibling.right.color == 'BLACK':
+                    node_sibling.color = 'RED'
+                    node = node.parent
+                else:
+                    if node_sibling.right.color == 'BLACK':
+                        node_sibling.left.color = 'BLACK'
+                        node_sibling.color = 'RED'
+                        self.right_rotate(node_sibling)
+                        node_sibling = node.parent.right
+                    node_sibling.color = node.parent.color
+                    node.parent.color = 'BLACK'
+                    node_sibling.right.color = 'BLACK'
+                    self.left_rotate(node.parent)
+                    node = self.root
+            else:
+                node_sibling = node.parent.left
+                if node_sibling.color == 'RED':
+                    node_sibling.color = 'BLACK'
+                    node.parent.color = 'RED'
+                    self.right_rotate(node.parent)
+                    node_sibling = node.parent.left
+                if node_sibling.left.color == 'BLACK' and node_sibling.right.color == 'BLACK':
+                    node_sibling.color = 'RED'
+                    node = node.parent
+                else:
+                    if node_sibling.left.color == 'BLACK':
+                        node_sibling.right.color = 'BLACK'
+                        node_sibling.color = 'RED'
+                        self.left_rotate(node_sibling)
+                        node_sibling = node.parent.left
+                    node_sibling.color = node.parent.color
+                    node.parent.color = 'BLACK'
+                    node_sibling.left.color = 'BLACK'
+                    self.right_rotate(node.parent)
+                    node = self.root
