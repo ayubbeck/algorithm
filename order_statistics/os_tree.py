@@ -35,9 +35,8 @@ class OSTree:
         temp.left = node
         node.parent = temp
 
-        node_size = node.size
-        node.size = node.size - temp.size
-        temp.size = node_size
+        temp.size = node.size
+        node.size = node.left.size + node.right.size + 1
 
     def right_rotate(self, node):
         temp = node.left
@@ -58,9 +57,8 @@ class OSTree:
         temp.right = node
         node.parent = temp
 
-        node_size = node.size
-        node.size = node.size - temp.size
-        temp.size = node_size
+        temp.size = node.size
+        node.size = node.left.size + node.right.size + 1
 
     def add(self, data):
         node = Node(data)
