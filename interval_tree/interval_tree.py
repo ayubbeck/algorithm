@@ -16,8 +16,7 @@ class Node:
         return '[{}-{}] {} {}'.format(
             str(self.interval.low),
             str(self.interval.high),
-            str(self.max),self.color
-        )
+            str(self.max),self.color)
 
 class IntervalTree:
     def __init__(self):
