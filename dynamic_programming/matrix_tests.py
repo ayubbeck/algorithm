@@ -11,5 +11,10 @@ class MatrixTests(unittest.TestCase):
         self.assertEqual(m, 15125)
         self.assertEqual(s, 3)
 
+    def test_print_parens(self):
+        m, s = self.matrix.chain_order()
+        self.matrix.print_optimal_parens(self.matrix.s, 1, 5)
+        self.assertEqual(self.matrix.path, ' ( (A1 (A2A3) )  (A4A5) ) ')
+
 if __name__ == '__main__':
     unittest.main()
