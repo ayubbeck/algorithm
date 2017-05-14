@@ -22,3 +22,17 @@ class Fibonacci:
             self.memo[n] = output
 
         return output
+
+    def buttom_up_calc(self, n):
+        self.memo[0] = 0
+        self.memo[1] = 1
+        for i in range(2, n + 1):
+            if i % 2 == 0:
+                self.memo[0] = self.memo[0] + self.memo[1]
+            else:
+                self.memo[1] = self.memo[0] + self.memo[1]
+
+        if self.memo[0] > self.memo[1]:
+            return self.memo[0]
+        else:
+            return self.memo[1]

@@ -20,7 +20,15 @@ class FibTests(unittest.TestCase):
         self.assertEqual(self.fib.memoized_calc(4), 3)
         self.assertEqual(self.fib.memoized_calc(5), 5)
         self.assertEqual(self.fib.memoized_calc(6), 8)
-        self.assertEqual(self.fib.memoized_calc(36), 14930352)
+
+    def test_buttom_up_calc(self):
+        self.assertEqual(self.fib.buttom_up_calc(1), 1)
+        self.assertEqual(self.fib.buttom_up_calc(2), 1)
+        self.assertEqual(self.fib.buttom_up_calc(3), 2)
+        self.assertEqual(self.fib.buttom_up_calc(4), 3)
+        self.assertEqual(self.fib.buttom_up_calc(5), 5)
+        self.assertEqual(self.fib.buttom_up_calc(6), 8)
+        self.assertEqual(self.fib.buttom_up_calc(1000000), 8)
 
 if __name__ == '__main__':
     unittest.main()
