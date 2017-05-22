@@ -9,7 +9,7 @@ class Matrix:
         self.path = ''
 
     def chain_order(self):
-        for i in range(1, self.n):
+        for i in range(0, self.n):
             self.m[i][i] = 0
 
         for l in range(2, self.n):
