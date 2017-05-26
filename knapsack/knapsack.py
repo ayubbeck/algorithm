@@ -32,3 +32,22 @@ class Knapsack:
                 items.append(i)
 
         return items
+
+    def greedy_fill(self):
+        curr_items = []
+        curr_weight = 0
+        curr_value = 0
+
+        for i in range(self.items):
+            curr_weight = curr_weight + self.weights[i]
+            if curr_weight > self.capacity:
+                overflow = curr_weight - self.capacity
+                overflow_percentage = (overflow * 100) / self.weights[i]
+                curr_value = curr_value + self.values[i] - (self.values[i] * overflow_percentage) / 100
+                curr_items.append(str(100 - overflow_percentage) + '%')
+                return curr_items, curr_weight, curr_value
+            else:
+                curr_items.append('100%')
+                curr_value = curr_value + self.values[i]
+
+        return curr_items, curr_weight, curr_value
