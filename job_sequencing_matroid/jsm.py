@@ -7,6 +7,10 @@ class Job:
         self.max_deadline = max_deadline
         self.time_slots = [None for i in range(max_deadline)]
 
+    '''
+        takes O(n^2), uses greedy approach to
+        get the max profit
+    '''
     def sequence(self):
         profit = 0
         for job in self.jobs:
