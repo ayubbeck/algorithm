@@ -134,3 +134,38 @@ class FibHeap:
                 self.consolidate()
             self.number = self.number - 1
         return node
+
+    def cut(self, x, y):
+        if x == y.child:
+            y.child = x.right
+            x.right.left = None
+        else:
+            x.left.right = x.right
+            x.right.left = x.left
+        x.parent = None
+        x.mark = False
+        self.root_list.add(x)
+
+    def cascading_cut(self, node):
+        parent = node.parent
+        if parent is not None:
+            if node.mark == False:
+                node.mark == True
+            else:
+                self.cut(node, parent)
+                self.cascading_cut(parent)
+
+    def decrease_key(self, node, new_key):
+        if new_key > node.key:
+            raise Exception('New key is greater than current key')
+        node.key = new_key
+        parent = node.parent
+        if parent is not None and node.key < parent.key:
+            self.cut(node, parent)
+            self.cascading_cut(parent)
+        if node.key < self.min.key:
+            self.min = node
+
+    def delete(self, node):
+        self.decrease_key(node, -9999999)
+        self.extract_min()
