@@ -1,25 +1,39 @@
 import unittest
-from bfs import BFS, LinkedList
+from bfs import BFS
 
 class BFSTests(unittest.TestCase):
     def setUp(self):
-        self.bfs = BFS()
-        v = [[5, 2, 1], [4, 3, 5, 1, 2], [4, 2, 3], [3, 5, 2, 4], [2, 1, 4, 5]]
+        graph = {
+            'r': ['s', 'v'],
+            's': ['r', 'w'],
+            't': ['u', 'w', 'x'],
+            'u': ['t', 'x', 'y'],
+            'v': ['r'],
+            'w': ['s', 't', 'x'],
+            'x': ['t', 'u', 'w', 'y'],
+            'y': ['u', 'x']
+        }
+        self.bfs = BFS(graph)
 
-        for i in v:
-            l = LinkedList()
-            for j in i:
-                l.add(j)
-            self.bfs.adj.append(l)
-        self.bfs.bfs(0)
+    def test_bfs_color(self):
+        for i in self.bfs.vertices:
+            self.assertEqual(self.bfs.vertices[i].color, 'BLACK')
 
-    def test_bfs(self):
-        for i in range(len(self.bfs.adj)):
-            self.assertEqual(self.bfs.adj[i].head.key, i + 1)
-            self.assertEqual(self.bfs.adj[i].head.color, 'BLACK')
+    def test_bfs_distance(self):
+        self.assertEqual(self.bfs.vertices['r'].distance, 1)
+        self.assertEqual(self.bfs.vertices['s'].distance, 0)
+        self.assertEqual(self.bfs.vertices['t'].distance, 2)
+        self.assertEqual(self.bfs.vertices['u'].distance, 3)
+        self.assertEqual(self.bfs.vertices['v'].distance, 2)
+        self.assertEqual(self.bfs.vertices['w'].distance, 1)
+        self.assertEqual(self.bfs.vertices['x'].distance, 2)
+        self.assertEqual(self.bfs.vertices['y'].distance, 3)
 
-    def test_path(self):
-        self.assertEqual(self.bfs.short_path(self.bfs.adj[0].head, self.bfs.adj[2].head), [1, 2, 3])
+    def test_shortest_path(self):
+        self.assertEqual(
+            self.bfs.short_path(self.bfs.vertices['s'], self.bfs.vertices['y']),
+            ['s', 'w', 'x', 'y']
+        )
 
 if __name__ == '__main__':
     unittest.main()

@@ -26,8 +26,8 @@ class LinkedList:
 
 class DFS:
     def __init__(self, graph):
-        self.vertices = {}
         self.time = 0
+        self.vertices = {}
         self.sorted_vertices = []
 
         for item in graph:

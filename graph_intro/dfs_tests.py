@@ -1,5 +1,5 @@
 import unittest
-from dfs import DFS, LinkedList, Vertex
+from dfs import DFS
 
 class DFSTests(unittest.TestCase):
     def setUp(self):
