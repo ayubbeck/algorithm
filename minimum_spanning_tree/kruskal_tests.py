@@ -1,7 +1,7 @@
 import unittest
 from kruskal import Kruskal
 
-class DisjointSetTests(unittest.TestCase):
+class KruskalTests(unittest.TestCase):
     def setUp(self):
         graph = {
             'a': [{'b': 4}, {'h': 8}],
@@ -20,6 +20,9 @@ class DisjointSetTests(unittest.TestCase):
         self.assertEqual(self.k.min_path[0].weight, 1)
         self.assertEqual(self.k.min_path[0].a.key, 'g')
         self.assertEqual(self.k.min_path[0].b.key, 'h')
+
+    def test_weight(self):
+        self.assertEqual(self.k.total_weight, 37)
 
 if __name__ == "__main__":
     unittest.main()

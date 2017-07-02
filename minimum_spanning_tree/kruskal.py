@@ -21,6 +21,7 @@ class Kruskal:
         self.vertices = {}
         self.edges = []
         self.min_path = []
+        self.total_weight = 0
         self.kruskal(vertices)
 
     def kruskal(self, vertices):
@@ -41,6 +42,7 @@ class Kruskal:
         for edge in self.edges:
             if not self.same_component(edge.a, edge.b):
                 self.min_path.append(edge)
+                self.total_weight = self.total_weight + edge.weight
                 self.union(edge.a, edge.b)
 
     def make_set(self, node):
