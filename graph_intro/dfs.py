@@ -1,58 +1,47 @@
-# Depth First Search
 import sys
+# from os import path
+# sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from Queue import Queue
+from linked_list.linked_list import LinkedList
 
+# Vertex
 class Vertex:
-    def __init__(self, key):
-        self.key = key
+    def __init__(self, id):
+        self.id = id
         self.color = 'WHITE'
         self.distance = sys.maxint
         self.finish = sys.maxint
         self.prev = None
-        self.next = None
-        self.adj = None
 
     def __str__(self):
-        return str(self.key) + ' ' + str(self.color) + ' ' + str(self.distance) + '/' + str(self.finish)
+        return str(self.id) + ' ' + str(self.color) + ' ' + str(self.distance) + '/' + str(self.finish)
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
-
-    def add(self, key):
-        node = Vertex(key)
-        node.next = self.head
-        self.head = node
-
-class DFS:
-    def __init__(self, graph):
+# Depth First Search Graph
+class Graph:
+    def __init__(self, vertices, edges):
         self.time = 0
-        self.vertices = {}
+        self.vertices = self.init_vertices(vertices)
+        self.edges = edges
         self.sorted_vertices = []
-
-        for item in graph:
-            self.vertices[item] = Vertex(item)
-
-        for i in graph:
-            l = LinkedList()
-            for j in graph[i]:
-                l.add(j)
-            self.vertices[i].adj = l
 
         for i in self.vertices:
             if self.vertices[i].color == 'WHITE':
                 self.dfs_visit(self.vertices[i])
 
+    def init_vertices(self, vertices):
+        dict = {}
+        for i in vertices:
+            dict[i] = Vertex(i)
+        return dict
+
     def dfs_visit(self, u):
         self.time = self.time + 1
         u.distance = self.time
         u.color = 'GRAY'
-        v = u.adj.head
-        while v is not None:
-            if self.vertices[v.key].color == 'WHITE':
-                self.vertices[v.key].prev = u
-                self.dfs_visit(self.vertices[v.key])
-            v = v.next
+        for v in self.edges[u.id]:
+            if self.vertices[v].color == 'WHITE':
+                self.vertices[v].prev = u
+                self.dfs_visit(self.vertices[v])
         u.color = 'BLACK'
         self.time = self.time + 1
         u.finish = self.time
@@ -61,5 +50,5 @@ class DFS:
     def topological_sort(self):
         s = ''
         for i in reversed(range(len(self.sorted_vertices))):
-            s = s + str(self.sorted_vertices[i].key)
+            s = s + str(self.sorted_vertices[i].id)
         return s

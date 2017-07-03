@@ -1,9 +1,10 @@
 import unittest
-from dfs import DFS
+from dfs import Graph
 
-class DFSTests(unittest.TestCase):
+class GraphTests(unittest.TestCase):
     def setUp(self):
-        graph = {
+        vertices = ['u', 'v', 'w', 'x', 'y', 'z']
+        edges = {
             'u': ['v', 'x'],
             'v': ['y'],
             'w': ['y', 'z'],
@@ -11,22 +12,22 @@ class DFSTests(unittest.TestCase):
             'y': ['x'],
             'z': ['z']
         }
-        self.dfs = DFS(graph)
+        self.g = Graph(vertices, edges)
 
     def test_bfs_color(self):
-        for i in self.dfs.vertices:
-            self.assertEqual(self.dfs.vertices[i].color, 'BLACK')
+        for i in self.g.vertices:
+            self.assertEqual(self.g.vertices[i].color, 'BLACK')
 
     def test_bfs_distance(self):
-        self.assertEqual(self.dfs.vertices['x'].distance, 2)
-        self.assertEqual(self.dfs.vertices['z'].distance, 10)
+        self.assertEqual(self.g.vertices['x'].distance, 4)
+        self.assertEqual(self.g.vertices['z'].distance, 10)
 
     def test_bfs_finish(self):
-        self.assertEqual(self.dfs.vertices['x'].finish, 7)
-        self.assertEqual(self.dfs.vertices['z'].finish, 11)
+        self.assertEqual(self.g.vertices['x'].finish, 5)
+        self.assertEqual(self.g.vertices['z'].finish, 11)
 
     def test_topological_sort(self):
-        self.assertEqual(self.dfs.topological_sort(), 'wzuxvy')
+        self.assertEqual(self.g.topological_sort(), 'wzuvyx')
 
 if __name__ == '__main__':
     unittest.main()
