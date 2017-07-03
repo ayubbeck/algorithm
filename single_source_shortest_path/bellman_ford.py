@@ -15,8 +15,7 @@ class Graph:
         dict = {}
         # init verteces
         for i in vertices:
-            vertex = Vertex(i)
-            dict[i] = vertex
+            dict[i] = Vertex(i)
         # start vertex will have 0 for distance
         dict[start].d = 0
         return dict
