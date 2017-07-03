@@ -1,8 +1,5 @@
 import sys
-# from os import path
-# sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from Queue import Queue
-from linked_list.linked_list import LinkedList
 
 # Vertex
 class Vertex:
