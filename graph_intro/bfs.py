@@ -1,52 +1,33 @@
-# Breadth First Search
 import sys
 from Queue import Queue
 
+# Vertex
 class Vertex:
-    def __init__(self, key):
-        self.key = key
+    def __init__(self, id):
+        self.id = id
         self.color = 'WHITE'
         self.distance = sys.maxint
         self.prev = None
-        self.next = None
-        self.adj = None
 
     def __str__(self):
-        s = ''
-        node = self.adj.head
-        while node is not None:
-            s = s + str(node.key)
-            node = node.next
-        return 'distance: ' + str(self.distance) + ', key: ' + str(self.key) + \
-               ', children: ' + s + ', color: ' + str(self.color)
+        return str(self.id) + ' ' + str(self.color) + ' ' + str(self.distance)
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
-
-    def add(self, key):
-        node = Vertex(key)
-        node.next = self.head
-        self.head = node
-
-class BFS:
-    def __init__(self, graph):
-        self.vertices = {}
-        self.graph_it(graph)
+# Breadth First Search Graph
+class Graph:
+    def __init__(self, vertices, edges):
+        self.vertices = self.init_vertices(vertices)
+        self.edges = edges
 
         for i in self.vertices:
             if self.vertices[i].color == 'WHITE':
                 self.bfs_visit(self.vertices['s'])
 
-    def graph_it(self, graph):
-        for item in graph:
-            self.vertices[item] = Vertex(item)
+    def init_vertices(self, vertices):
+        dict = {}
+        for i in vertices:
+            dict[i] = Vertex(i)
 
-        for i in graph:
-            l = LinkedList()
-            for j in graph[i]:
-                l.add(j)
-            self.vertices[i].adj = l
+        return dict
 
     def bfs_visit(self, vertex):
         vertex.color = 'GRAY'
@@ -58,24 +39,20 @@ class BFS:
         # process each child
         while not q.empty():
             u = q.get()
-            # child's distance will be parent's distance + 1
-            size = u.distance
-            v = u.adj.head
-            while v is not None:
-                if self.vertices[v.key].color == 'WHITE':
-                    self.vertices[v.key].color = 'GRAY'
-                    self.vertices[v.key].distance = size + 1
-                    self.vertices[v.key].prev = u
-                    q.put(self.vertices[v.key])
-                v = v.next
+            for v in self.edges[u.id]:
+                if self.vertices[v].color == 'WHITE':
+                    self.vertices[v].color = 'GRAY'
+                    self.vertices[v].distance = u.distance + 1
+                    self.vertices[v].prev = u
+                    q.put(self.vertices[v])
             u.color = 'BLACK'
 
     def short_path(self, s, v, path=[]):
         if s == v:
-            path.append(s.key)
+            path.append(s.id)
         elif v.prev is None:
             path.append('no path from ' + s + ' to ' + v + ' exists')
         else:
             self.short_path(s, v.prev, path)
-            path.append(v.key)
+            path.append(v.id)
             return path
