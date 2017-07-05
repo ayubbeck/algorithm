@@ -1,3 +1,4 @@
+import sys
 import math
 import copy
 
@@ -167,5 +168,5 @@ class FibHeap:
             self.min = node
 
     def delete(self, node):
-        self.decrease_key(node, -9999999)
+        self.decrease_key(node, sys.minint)
         self.extract_min()
