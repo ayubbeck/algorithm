@@ -76,6 +76,9 @@ class HeapPriorityQueue:
         self.increase_size()
         self.heapify_up(self.last_index())
 
+    def empty(self):
+        return self.size == 0
+
     def find_index(self, item):
         for i in range(self.size):
             if self.arr[i] == item:
