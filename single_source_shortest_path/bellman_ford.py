@@ -6,6 +6,9 @@ class Vertex:
         self.d = sys.maxint
         self.p = None
 
+    def __str__(self):
+        return str(self.id) + ' ' + str(self.d)
+
 class Graph:
     def __init__(self, vertices, edges, start):
         self.vertices = self.init_single_source(vertices, start)
