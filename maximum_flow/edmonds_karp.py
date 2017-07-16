@@ -13,7 +13,7 @@ class Edge:
         return str(self.start) + '-' + str(self.end) + ': ' + str(self.capacity)
 
 # Edmonds Karp (EK) algorithm for Ford Fulkerson (FF) Method
-# FF does not define the path between the source to sink.
+# FF does not define the path between the source and sink.
 # It could be any path, longest or sortest. It does not matter.
 # Where as EK uses only shortest path between the two by using Breadth First Search.
 # Thus, EK O(VE^2) is faster than FF O(EF).
