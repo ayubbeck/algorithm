@@ -17,7 +17,7 @@ class Graph:
     def __init__(self, vertices, edges, start):
         self.vertices = self.init_vertices(vertices)
         self.edges = edges
-
+        # build BFS
         for i in self.vertices:
             if self.vertices[i].color == 'WHITE':
                 self.bfs_visit(self.vertices[start])
@@ -55,4 +55,12 @@ class Graph:
         else:
             self.short_path(s, v.prev, path)
             path.append(v.id)
+            return path
+
+    def get_path(self, s, v, path=[]):
+        if v.prev is None:
+            return path
+        else:
+            self.get_path(s, v.prev, path)
+            path.append(str(v.prev.id) + '-' + str(v.id))
             return path
