@@ -1,5 +1,4 @@
 import sys
-from Queue import Queue
 
 # Vertex
 class Vertex:

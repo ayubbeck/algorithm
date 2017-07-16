@@ -3,7 +3,7 @@ from bfs import Graph
 
 class GraphTests(unittest.TestCase):
     def setUp(self):
-        vertices = ['r', 's', 't', 'u', 'v', 'w', 'x', 'y']
+        vertices = ['r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'k']
         edges = {
             'r': ['s', 'v'],
             's': ['r', 'w'],
@@ -12,16 +12,17 @@ class GraphTests(unittest.TestCase):
             'v': ['r'],
             'w': ['s', 't', 'x'],
             'x': ['t', 'u', 'w', 'y'],
-            'y': ['u', 'x']
+            'y': ['u', 'x'],
+            'k': []
         }
-        self.g = Graph(vertices, edges)
-
-    def test_one(self):
-        self.assertEqual(0, 0)
+        self.g = Graph(vertices, edges, 's')
 
     def test_bfs_color(self):
         for i in self.g.vertices:
-            self.assertEqual(self.g.vertices[i].color, 'BLACK')
+            if i != 'k':
+                self.assertEqual(self.g.vertices[i].color, 'BLACK')
+            else:
+                self.assertEqual(self.g.vertices['k'].color, 'WHITE')
 
     def test_bfs_distance(self):
         self.assertEqual(self.g.vertices['r'].distance, 1)
@@ -35,6 +36,9 @@ class GraphTests(unittest.TestCase):
 
     def test_shortest_path(self):
         self.assertEqual(self.g.short_path(self.g.vertices['s'], self.g.vertices['y']), ['s', 'w', 'x', 'y'])
+
+    def test_shortest_path(self):
+        self.assertEqual(self.g.short_path(self.g.vertices['s'], self.g.vertices['k']), [])
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,13 +14,13 @@ class Vertex:
 
 # Breadth First Search Graph
 class Graph:
-    def __init__(self, vertices, edges):
+    def __init__(self, vertices, edges, start):
         self.vertices = self.init_vertices(vertices)
         self.edges = edges
 
         for i in self.vertices:
             if self.vertices[i].color == 'WHITE':
-                self.bfs_visit(self.vertices['s'])
+                self.bfs_visit(self.vertices[start])
 
     def init_vertices(self, vertices):
         dict = {}
@@ -33,7 +33,7 @@ class Graph:
         vertex.color = 'GRAY'
         vertex.distance = 0
         vertex.prev = None
-        # this queue keeps trak of children
+        # this queue keeps track of children
         q = Queue()
         q.put(vertex)
         # process each child
@@ -51,7 +51,7 @@ class Graph:
         if s == v:
             path.append(s.id)
         elif v.prev is None:
-            path.append('no path from ' + s + ' to ' + v + ' exists')
+            return path
         else:
             self.short_path(s, v.prev, path)
             path.append(v.id)
