@@ -1,5 +1,4 @@
 import sys
-from Queue import Queue
 
 class Vertex:
     def __init__(self, id, height=0, excess=0):
