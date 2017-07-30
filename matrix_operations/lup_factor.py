@@ -21,6 +21,7 @@ class Matrix:
         # find x. U * x = y
         self.find_x()
 
+    # takes O(n^3)
     def lu_decompose(self):
         for col in range(self.n):
             pivot = self.u[col][col]
@@ -29,7 +30,7 @@ class Matrix:
                 self.l[row][col] = low
                 for v in range(col, self.n):
                     self.u[row][v] = self.u[row][v] - low * self.u[col][v]
-
+    # takes O(n^2)
     def find_y(self):
         for row in range(self.n):
             sum = 0
@@ -39,7 +40,7 @@ class Matrix:
                 else:
                     self.y[row] = self.b[row] - sum
                     break
-
+    # takes O(n^2)
     def find_x(self):
         for row in reversed(range(self.n)):
             sum = 0
